@@ -9,9 +9,9 @@ import rp2
 def led():
     irq(4)
     wrap_target()
-    set(pins, 0)[3]
+    set(pins, 0)    [3]
     wait(0, irq, 4)
-    set(pins, 1)[4]
+    set(pins, 1)    [4]
     wrap()
 
 
@@ -38,42 +38,42 @@ def nec_tx():
     set(x, 17)
     irq(clear, 4)
     label('leader_pulse')
-    jmp(x_dec, 'leader_pulse')[24]
+    jmp(x_dec, 'leader_pulse')  [24]
     # Leader Code: Space 4.5ms = 20us * 25 * 9
     set(x, 8)
     irq(4)
     label('leader_space')
-    jmp(x_dec, 'leader_space')[24]
+    jmp(x_dec, 'leader_space')  [24]
 
     # Address Code and Data Code
     label('sending')
     # Pulse 560us = 20us * 28
     irq(clear, 4)
-    out(x, 1)[26]
+    out(x, 1)       [26]
     # Space 560us = 20us * (26 + 1 + 1) include two jmps
-    irq(4)[25]
+    irq(4)          [25]
     jmp(not_x, 'bit_zero')
 
     # Space 1690us - 560us = 1130us = 20us * 57 - 10us
     # ignore this 10 us because of frequency
-    nop()[27]
-    nop()[28]
+    nop()           [27]
+    nop()           [28]
     label('bit_zero')
     jmp(not_osre, 'sending')  # stop sending when osr is empty
 
     # Stop Bit: Pulse 560us = 20us * 28
-    irq(clear, 4)[27]
+    irq(clear, 4)   [27]
 
     # Gap: Space 140ms = 20us * 28 * 5 * 25 * 2
     irq(4)
     set(x, 1)
     set(y, 24)
     label("gap")
-    nop()[27]
-    nop()[27]
-    nop()[27]
-    nop()[27]
-    jmp(y_dec, "gap")[27]
+    nop()               [27]
+    nop()               [27]
+    nop()               [27]
+    nop()               [27]
+    jmp(y_dec, "gap")   [27]
     set(y, 24)
     jmp(x_dec, "gap")
     wrap()

@@ -1,5 +1,5 @@
 # Pico IR
-IR Transmitter for Raspberry Pi Pico
+IR Transmitter for Raspberry Pi Pico implement with PIO API
 
 ## Supported Protocol
  - NEC
